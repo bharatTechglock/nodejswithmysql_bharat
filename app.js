@@ -9,12 +9,20 @@ const port = process.env.PORT || 5000;
 
 app.get("/", (req, res) => {
 
-    // var sql = "CREATE TABLE customers (id integer(20) PRIMARY KEY, name VARCHAR(255), address VARCHAR(255))";
+    // var sql = "CREATE TABLE products (id int(11) NOT NULL AUTO_INCREMENT, name VARCHAR(255),PRIMARY KEY (id))";
     // con.query(sql, function (err, result) {
     //     if (err) throw err;
     //     console.log("Table created");
     // });
-    // var sql = "INSERT INTO customers (name, address) VALUES ?";
+    // var sql = "INSERT INTO products (name) VALUES ?";
+    //     var values = [
+    //         ['qwerty Heaven' ],
+    //         ['Tasty Lemons' ],
+    //         ['Vanilla Dreams' ],
+    //         ['Chocolate2 Heaven' ],
+    //         ['Tasty2 Lemons' ],
+    //         ['choco Dreams' ]
+    //       ];
     // var values = [
     //     ['John', 'Highway 71'],
     //     ['Peter', 'Lowstreet 4'],
@@ -37,23 +45,40 @@ app.get("/", (req, res) => {
     //     res.send(result);
     // });
     // var sql = "INSERT INTO customers (name, address) VALUES ('Michelle', 'Blue Village 1')";
-    // con.query(sql, function (err, result) {
-    //     if (err) throw err;
-    //     console.log("1 record inserted, ID: " + result.insertId);
-    //     res.send(result);
-    // });
+    var sql = "SELECT customers.name AS customer, products.name AS favorite FROM customers JOIN products ON customers.name = products.name";
+    con.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log("1 record inserted, ID: " + result.insertId);
+        res.send(result);
+    });
     // con.query("SELECT * FROM customers", function (err, result, fields) {
     //     if (err) throw err;
     //     console.log(result);
     //     res.send(result);
     // });
-    con.query('SELECT * from customers LIMIT 10', (err, rows) => {
-        if (err) throw err;
-        console.log('The data from customers table are: \n', rows);
-        // connection.end();
-    res.send(rows);
-    });
+    // con.query('SELECT * from customers LIMIT 10', (err, rows) => {
+    //     if (err) throw err;
+    //     console.log('The data from customers table are: \n', rows);
+    // res.send(rows);
+    // });
+    // con.query("SELECT * FROM customers WHERE address = 'Central st 954'", function (err, result) {
+    //     if (err) throw err;
+    //     console.log(result);
+    //     res.send(result);
+    // });
+    // con.query("SELECT * FROM customers ORDER BY address", function (err, result) {
+    //     if (err) throw err;
+    //     console.log(result);
+    //     res.send(result);
+    // });
+    // con.query("UPDATE customers SET name = ? where name = ?",['Bharat','Amy'],(err,result)=>{
+    //     if (err) throw err;
+    //     console.log(result);
+    //     console.log("updated!");
+    //     res.send(result);
+    // });
+
 });
 app.listen(5000, () => {
-    console.log('Server is running at port 5000');
+    console.log('Server is running at port', `${port}`);
 });
